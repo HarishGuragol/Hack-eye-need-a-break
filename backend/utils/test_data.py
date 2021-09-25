@@ -16,8 +16,8 @@ def add_test_data():
     test_eye_data = [{
         "x": random.randint(0, 100),
         "y": random.randint(0, 100),
-        "timestamp": time.time() + random.randint(0, 50) - 50
-    } for _ in range(1000)]
+        "timestamp": time.time() + random.randint(0, 1000) - 1000
+    } for _ in range(20000)]
 
     with create_session() as sess:
         user = sess.query(User).filter(User.c.email == test_user["email"]).one_or_none()

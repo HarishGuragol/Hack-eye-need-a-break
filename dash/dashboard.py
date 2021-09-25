@@ -8,6 +8,8 @@ import plotly.express as px
 import pandas as pd
 import numpy as np
 
+from db.utils.calc_scores import get_dash_data
+
 app = dash.Dash(__name__)
 
 # assume you have a "long-form" data frame
@@ -18,8 +20,11 @@ df = pd.DataFrame({
     "City": ["SF", "SF", "SF", "Montreal", "Montreal", "Montreal"]
 })
 
-t = np.arange(0,100) # replace with times from db
-y = np.random.rand(100) # replace with scores from db
+y, t = get_dash_data(2)
+min_t = min(t)
+t = list(map(lambda x: (x-min_t)/60, t))
+# t = np.arange(0,100) # replace with times from db
+# y = np.random.rand(100) # replace with scores from db
 
 df = pd.DataFrame({'t':t, 'y':y})
 

@@ -13,7 +13,7 @@ Steps to use-
 
 ```bash
 > pip install -r .\backend\requirements.txt
->  python run_server.py
+> python run_server.py
 ```
 
 **http://localhost:5000/apidocs/** - **api description**

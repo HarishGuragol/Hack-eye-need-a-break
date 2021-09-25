@@ -1,7 +1,7 @@
 import time
 
 from backend.session import create_session
-from db.models import User, EyeData
+from db.models import User, EyeData, Score
 import secrets
 
 
@@ -73,9 +73,20 @@ def get_eye_data_by_user_id(user_id, limit_time=60 * 10):
     return eye_data
 
 
+def create_score(user_id, score, timestamp):
+    with create_session() as sess:
+        insert_score = Score.insert().values(
+            id=last_free_id(Score),
+            user_id=user_id,
+            score=score,
+            timestamp=timestamp
+        )
+        sess.execute(insert_score)
+
+
 def last_free_id(table):
     with create_session() as sess:
-        data = sess.query(EyeData).order_by(table.c.id.desc()).first()
+        data = sess.query(table).order_by(table.c.id.desc()).first()
 
     if not data:
         index_free = 1

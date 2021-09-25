@@ -3,3 +3,4 @@ flasgger==0.9.5
 SQLAlchemy==1.4.23
 psycopg2-binary==2.9.1
 Flask-Cors==3.0.10
+numpy==1.21.2
