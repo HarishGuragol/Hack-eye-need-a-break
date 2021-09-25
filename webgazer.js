@@ -10464,7 +10464,7 @@ function store_points(x, y, k) {
     webgazer.params.camConstraints = webgazer.params.camConstraints || { video: { width: { min: 320, ideal: 640, max: 1920 }, height: { min: 240, ideal: 480, max: 1080 }, facingMode: "user" } };
 
     webgazer.params.smoothEyeBB = webgazer.params.smoothEyeBB || false;
-    webgazer.params.blinkDetectionOn = webgazer.params.blinkDetectionOn || false;
+    webgazer.params.blinkDetectionOn = webgazer.params.blinkDetectionOn || true;
 
     // Why is this not in webgazer.params ?
     var debugVideoLoc = '';
