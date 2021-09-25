@@ -18,11 +18,8 @@ df = pd.DataFrame({
     "City": ["SF", "SF", "SF", "Montreal", "Montreal", "Montreal"]
 })
 
-t = np.arange(0,100)
-y = np.random.rand(100)
-
-print(len(t))
-print(len(y))
+t = np.arange(0,100) # replace with times from db
+y = np.random.rand(100) # replace with scores from db
 
 df = pd.DataFrame({'t':t, 'y':y})
 
@@ -31,10 +28,10 @@ df = pd.DataFrame({'t':t, 'y':y})
 fig = px.line(df, x='t', y='y', title='attention score')
 
 app.layout = html.Div(children=[
-    html.H1(children='Hello Dash'),
+    html.H1(children='Dashboard'),
 
     html.Div(children='''
-        Dash: A web application framework for your data.
+        Summary of attention scores from eye-tracking data.
     '''),
 
     dcc.Graph(
