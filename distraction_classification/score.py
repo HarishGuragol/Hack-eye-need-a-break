@@ -102,6 +102,8 @@ def score_variance(data, width, height):
 
     # calculate score + apply threshold
     score = std / std_random
+    if score > 1:
+        score = 1
 
     return score
 
