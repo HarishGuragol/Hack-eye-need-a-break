@@ -111,10 +111,12 @@ var slider = document.getElementById("rangeInput");
 var output = document.getElementById("dynamicSet");
 
 output.innerHTML = slider.value
+sendSensitivity(slider.value)
 update = () => {
     output.innerHTML = slider.value;
     // Display the default slider value
     console.log(slider.value)
+    sendSensitivity(slider.value)
 }
 
 slider.addEventListener('input', update);

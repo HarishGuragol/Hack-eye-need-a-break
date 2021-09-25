@@ -10,7 +10,7 @@ import plotly.graph_objects as go
 import pandas as pd
 import numpy as np
 
-from db.utils.calc_scores import get_dash_data
+from db.utils.calc_scores import get_dash_data, get_sensitivity_value
 
 app = dash.Dash(__name__)
 
@@ -22,7 +22,9 @@ df = pd.DataFrame({
     "City": ["SF", "SF", "SF", "Montreal", "Montreal", "Montreal"]
 })
 
-y, t = get_dash_data(2)
+user_id = 1
+sensitivity = get_sensitivity_value(user_id)
+y, t = get_dash_data(user_id)
 min_t = min(t)
 t = list(map(lambda x: (x-min_t)/60, t))
 # t = np.arange(0,100) # replace with times from db

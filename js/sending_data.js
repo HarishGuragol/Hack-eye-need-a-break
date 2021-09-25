@@ -22,3 +22,15 @@ setInterval(() => {
 function sendData(x, y, timestamp) {
   eyeData.push({x: x, y: y, timestamp: timestamp})
 }
+
+function sendSensitivity(value) {
+  fetch('http://localhost:5000/send_sensitivity', {
+    method: 'POST',
+    credentials: 'include',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({value: value})
+  });
+}

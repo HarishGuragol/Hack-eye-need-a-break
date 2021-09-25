@@ -1,8 +1,12 @@
 import time
 
+from sqlalchemy import update
+
 from backend.session import create_session
 from db.models import User, EyeData, Score
 import secrets
+
+from db.models.sensitivity import Sensitivity
 
 
 def create_new_user(first_name=None, last_name=None, email=None, cookie=None):
@@ -58,8 +62,6 @@ def add_eye_data(user_id, eye_data):
             eye_data = eye_data[50:]
 
 
-
-
 def get_eye_data_by_user_id(user_id, limit_time=60 * 10):
     time_filter_value = time.time() - limit_time
     with create_session() as sess:
@@ -82,6 +84,28 @@ def create_score(user_id, score, timestamp):
             timestamp=timestamp
         )
         sess.execute(insert_score)
+
+
+def create_new_sensitivity(user_id, value):
+    with create_session() as sess:
+        insert = Sensitivity.insert().values(
+            id=last_free_id(Sensitivity),
+            user_id=user_id,
+            value=value
+        )
+        sess.execute(insert)
+
+
+def set_sensitivity(user_id, value):
+    with create_session() as sess:
+        update_sql = update(Sensitivity).where(Sensitivity.c.user_id == user_id).values(value=value)
+        sess.execute(update_sql)
+
+
+def get_sensitivity_by_user_id(user_id):
+    with create_session() as sess:
+        sensitivity = sess.query(Sensitivity).filter(Sensitivity.c.user_id == user_id).one_or_none()
+    return sensitivity
 
 
 def last_free_id(table):

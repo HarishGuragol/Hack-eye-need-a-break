@@ -1,7 +1,7 @@
 import time
 import numpy as np
 from backend.session import create_session
-from backend.utils.utils import create_score
+from backend.utils.utils import create_score, get_sensitivity_by_user_id
 from db.models import EyeData, Score, User
 from distraction_classification.score import score_variance
 
@@ -89,6 +89,12 @@ def get_dash_data(user_id):
     return s, dt
 
 
+def get_sensitivity_value(user_id):
+    sensitivity = get_sensitivity_by_user_id(user_id)
+    if not sensitivity:
+        raise Exception(f"For user(user_id={user_id}) not found sensitivity. Try to change user_id")
+    return sensitivity[2]
+
+
 if __name__ == '__main__':
-    while True:
-        calc_score_for_all_users()
+    calc_score_for_all_users()
