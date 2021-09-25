@@ -2,7 +2,8 @@ import random
 import time
 
 from backend.session import create_session
-from backend.utils.utils import create_new_user, add_eye_data
+from backend.utils.utils import create_new_user, add_eye_data, get_sensitivity_by_user_id, set_sensitivity, \
+    create_new_sensitivity
 from db.models import User
 
 
@@ -28,3 +29,6 @@ def add_test_data():
                 email=test_user["email"],
             )
         add_eye_data(user.id, test_eye_data)
+
+    if not get_sensitivity_by_user_id(user.id):
+        create_new_sensitivity(user.id, 0.6)
