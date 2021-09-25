@@ -5,6 +5,8 @@ import dash
 import dash_core_components as dcc
 import dash_html_components as html
 import plotly.express as px
+from plotly.subplots import make_subplots
+import plotly.graph_objects as go
 import pandas as pd
 import numpy as np
 
@@ -25,7 +27,15 @@ df = pd.DataFrame({'t':t, 'y':y})
 
 
 #fig = px.bar(df, x="Fruit", y="Amount", color="City", barmode="group")
-fig = px.line(df, x='t', y='y', title='attention score')
+fig = px.line(df, x='t', y='y', labels={
+                     "t": "time [ms]",
+                     "y": "Attention score",
+                 },)
+
+fig2 = make_subplots(rows=1, cols=2, specs=[[{"type": "xy"}, {"type": "domain"}]])
+
+fig2.add_trace(go.Histogram(x=df["y"]), row=1, col=1)
+fig2.add_trace(go.Pie(values=[2, 3, 1]), row=1, col=2)
 
 app.layout = html.Div(children=[
     html.H1(children='Dashboard'),
@@ -37,7 +47,17 @@ app.layout = html.Div(children=[
     dcc.Graph(
         id='example-graph',
         figure=fig
+    ),
+
+    html.Div(children='''
+        Summary of attention scores from eye-tracking data.
+    '''),
+
+    dcc.Graph(
+        id='example-graph2',
+        figure=fig2
     )
+
 ])
 
 if __name__ == '__main__':
