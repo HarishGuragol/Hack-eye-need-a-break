@@ -8,3 +8,11 @@ Steps to use-
 4. Check console for live data points
 5. To set a custom background click on browse
 6. Once done you can click on save to download .csv files
+
+## Run backend and db
+
+```bash
+> docker-compose up
+```
+
+**http://localhost:5000/apidocs/** - **api description**
