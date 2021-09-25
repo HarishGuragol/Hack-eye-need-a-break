@@ -11,18 +11,15 @@ import pandas as pd
 import numpy as np
 
 from db.utils.calc_scores import get_dash_data
+THRESH=0.8
 
 app = dash.Dash(__name__)
 
 # assume you have a "long-form" data frame
 # see https://plotly.com/python/px-arguments/ for more options
-df = pd.DataFrame({
-    "Fruit": ["Apples", "Oranges", "Bananas", "Apples", "Oranges", "Bananas"],
-    "Amount": [4, 1, 2, 2, 4, 5],
-    "City": ["SF", "SF", "SF", "Montreal", "Montreal", "Montreal"]
-})
 
-y, t = get_dash_data(2)
+y, t = get_dash_data(1)
+print(t)
 min_t = min(t)
 t = list(map(lambda x: (x-min_t)/60, t))
 # t = np.arange(0,100) # replace with times from db
@@ -30,6 +27,11 @@ t = list(map(lambda x: (x-min_t)/60, t))
 
 df = pd.DataFrame({'t':t, 'y':y})
 
+above_thresh = np.sum(np.array([1 for yy in df['y'] if yy >= THRESH]))
+below_thresh = len(df['y']) - above_thresh
+
+above_percent = above_thresh / (above_thresh + below_thresh) * 100
+below_percent = 100 - above_percent
 
 #fig = px.bar(df, x="Fruit", y="Amount", color="City", barmode="group")
 fig = px.line(df, x='t', y='y', labels={
@@ -40,7 +42,7 @@ fig = px.line(df, x='t', y='y', labels={
 fig2 = make_subplots(rows=1, cols=2, specs=[[{"type": "xy"}, {"type": "domain"}]])
 
 fig2.add_trace(go.Histogram(x=df["y"]), row=1, col=1)
-fig2.add_trace(go.Pie(values=[2, 3, 1]), row=1, col=2)
+fig2.add_trace(go.Pie(values=[above_percent, below_percent]), row=1, col=2)
 
 app.layout = html.Div(children=[
     html.H1(children='Dashboard'),
