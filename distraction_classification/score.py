@@ -114,6 +114,9 @@ def score_remodnav(data, width, height):
     
     return np.nan
 
+def score(data, width, height):
+    return score_variance(data, width, height)
+
 """
     Transform uniform score to discrete classifier
     For now we use a linear scale which may not be the best choice in the long run...
