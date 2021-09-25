@@ -40,10 +40,24 @@ def get_user_by_id(user_id):
 
 
 def add_eye_data(user_id, eye_data):
+    free_index = last_free_id(EyeData)
     eye_data = [{"user_id": user_id, **eye_item} for eye_item in eye_data]
+
+    for eye_item in eye_data:
+        eye_item["id"] = free_index
+        free_index += 1
+
     with create_session() as sess:
-        insert_eye_data = EyeData.insert().values(eye_data)
-        sess.execute(insert_eye_data)
+        while True:
+            insert_data = eye_data[:50]
+            if not insert_data:
+                break
+
+            insert_eye_data = EyeData.insert().values(insert_data)
+            sess.execute(insert_eye_data)
+            eye_data = eye_data[50:]
+
+
 
 
 def get_eye_data_by_user_id(user_id, limit_time=60 * 10):
@@ -57,3 +71,15 @@ def get_eye_data_by_user_id(user_id, limit_time=60 * 10):
             .all()
         )
     return eye_data
+
+
+def last_free_id(table):
+    with create_session() as sess:
+        data = sess.query(EyeData).order_by(table.c.id.desc()).first()
+
+    if not data:
+        index_free = 1
+    else:
+        index_free = data[0] + 1
+
+    return index_free
