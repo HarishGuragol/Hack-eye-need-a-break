@@ -21,7 +21,7 @@ window.onload = function () {
                 // push to onlyTime array
                 onlyTime.push([elapsedTime]);
 
-                console.log(data["x"] + ", " + data["y"] + ", " + clock);
+                 console.log(data["x"] + ", " + data["y"] + ", " + clock + "," + screen.width + ", " + screen.height);
             }
 
             //   console.log(clock); /* elapsed time in milliseconds since webgazer.begin() was called */
