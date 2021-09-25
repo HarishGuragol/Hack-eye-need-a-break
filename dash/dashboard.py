@@ -29,7 +29,7 @@ t = list(map(lambda x: (x-min_t)/60, t))
 
 df = pd.DataFrame({'t':t, 'y':y})
 
-above_thresh = np.sum(np.array([1 for yy in df['y'] if yy >= THRESH]))
+above_thresh = np.sum(np.array([1 for yy in df['y'] if yy >= sensitivity]))
 below_thresh = len(df['y']) - above_thresh
 
 above_percent = above_thresh / (above_thresh + below_thresh) * 100
