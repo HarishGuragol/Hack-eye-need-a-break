@@ -12,7 +12,8 @@ Steps to use-
 ## Run backend and db
 
 ```bash
-> docker-compose up
+> pip install -r .\backend\requirements.txt
+>  python run_server.py
 ```
 
 **http://localhost:5000/apidocs/** - **api description**
