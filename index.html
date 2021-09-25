@@ -39,9 +39,9 @@ Instructions on use can be found in the README repository.
     <a href="#" class="btn-sm" onclick="Restart()">Recalibrate Here</a>
     <a href="#" class="btn-sm" onclick="saveGaze(gazeData); saveGaze(onlyTime);">Save</a>
     <input class="btn-sm" type="file" id="backImage" onchange="readURL(this);">
-    <!-- <input type="range" class="range" min="-20" max="20">
+    <p>Value: <span id="dynamicSet"></span></p>
+    <input id="rangeInput" type="range" class="range" min="0" max="1">
     <output class="bubble"></output>
-     -->
   </div>
   
   <canvas id="plotting_canvas" width="500" height="500" style="cursor:crosshair;"></canvas>

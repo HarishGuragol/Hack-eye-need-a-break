@@ -105,3 +105,16 @@ function setBubble(range, bubble) {
   // Sorta magic numbers based on size of the native UI thumb
   bubble.style.left = `calc(${newVal}% + (${8 - newVal * 0.15}px))`;
 }
+
+// range slider 
+var slider = document.getElementById("rangeInput");
+var output = document.getElementById("dynamicSet");
+
+output.innerHTML = slider.value
+update = () => {
+    output.innerHTML = slider.value;
+    // Display the default slider value
+    console.log(slider.value)
+}
+
+slider.addEventListener('input', update);
