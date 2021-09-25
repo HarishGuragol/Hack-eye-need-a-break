@@ -64,6 +64,8 @@ def calc_std(x, y):
     mean = [np.mean(x), np.mean(y)]
     dist = [np.sqrt((xx-mean[0])**2 + (yy-mean[1])**2) for xx,yy in zip(x,y)]
     std = np.std(dist)
+    if std != std:
+        std = 0
     return std
 
 """
