@@ -38,13 +38,17 @@ below_percent = 100 - above_percent
 #fig = px.bar(df, x="Fruit", y="Amount", color="City", barmode="group")
 fig = px.line(df, x='t', y='y', labels={
                      "t": "time [ms]",
-                     "y": "Attention score",
+                     "y": "Distraction score",
                  },)
 
 fig2 = make_subplots(rows=1, cols=2, specs=[[{"type": "xy"}, {"type": "domain"}]])
 
 fig2.add_trace(go.Histogram(x=df["y"]), row=1, col=1)
-fig2.add_trace(go.Pie(values=[above_percent, below_percent]), row=1, col=2)
+fig2.add_trace(go.Pie(values=[above_percent, below_percent], labels=['distracted', 'attentive']), row=1, col=2)
+
+fig2.update_xaxes(title_text="score", row=1, col=1)
+fig2.update_yaxes(title_text="frequency", row=1, col=1)
+
 
 app.layout = html.Div(children=[
     html.H1(children='Dashboard'),
@@ -59,7 +63,6 @@ app.layout = html.Div(children=[
     ),
 
     html.Div(children='''
-        Summary of attention scores from eye-tracking data.
     '''),
 
     dcc.Graph(
