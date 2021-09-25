@@ -1,4 +1,4 @@
-from flask import request, make_response
+from flask import request, make_response, jsonify
 
 from backend.app import app
 from backend.utils.utils import create_new_user, get_user_by_cookie, add_eye_data, get_user_by_id, \
@@ -28,8 +28,16 @@ def get_eye_data():
     if not user:
         return "User is not found", 404
 
-    eye_data = get_eye_data_by_user_id(user.id)
-    print(user)
+    time_limit = int(request.args.get("time_limit", 60 * 10))
+
+    eye_data = get_eye_data_by_user_id(user.id, time_limit)
+    eye_data = list([{
+        "x": eye_item[2],
+        "y": eye_item[3],
+        "timestamp": eye_item[4]
+    } for eye_item in eye_data])
+
+    return jsonify(eye_data)
 
 
 @app.route('/send_eye_data', methods=['POST'])
