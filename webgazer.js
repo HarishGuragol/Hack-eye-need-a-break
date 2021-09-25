@@ -10570,10 +10570,10 @@ function store_points(x, y, k) {
             var bottomBound = topBound + boxSize;
 
             //get the x and y positions of the left and right eyes
-   			var eyeLX = latestEyeFeatures.left.imagex;
-			var eyeLY = latestEyeFeatures.left.imagey;
-   			var eyeRX = latestEyeFeatures.right.imagex;
-   			var eyeRY = latestEyeFeatures.right.imagey;
+   			    var eyeLX = latestEyeFeatures.left.imagex;
+			      var eyeLY = latestEyeFeatures.left.imagey;
+   		    	var eyeRX = latestEyeFeatures.right.imagex;
+   			    var eyeRY = latestEyeFeatures.right.imagey;
 
             
             var xPositions = false;
