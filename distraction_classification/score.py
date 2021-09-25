@@ -114,6 +114,9 @@ def score_remodnav(data, width, height):
     
     return np.nan
 
+"""
+    wrapper for whatever scoring function we end up using
+"""
 def score(data, width, height):
     return score_variance(data, width, height)
 
