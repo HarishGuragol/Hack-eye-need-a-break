@@ -31,12 +31,17 @@ Instructions on use can be found in the README repository.
 
 <body LANG="en-US" LINK="#0000ff" DIR="LTR" id="testImage">
 <div class="d-flex justify-content-end">
+    <a href="dashboard.html" class="btn-sm"style="float: left">Dashboard</a>
     <p id="Accuracy">
-      <a href="#">Not Yet Calibrate</a>
+      <a href="#">Not Yet Calibrated</a>
     </p>
-    <a href="#" class="btn-sm" onclick="Restart()">Recalibrate</a>
+    
+    <a href="#" class="btn-sm" onclick="Restart()">Recalibrate Here</a>
     <a href="#" class="btn-sm" onclick="saveGaze(gazeData); saveGaze(onlyTime);">Save</a>
     <input class="btn-sm" type="file" id="backImage" onchange="readURL(this);">
+    <!-- <input type="range" class="range" min="-20" max="20">
+    <output class="bubble"></output>
+     -->
   </div>
   
   <canvas id="plotting_canvas" width="500" height="500" style="cursor:crosshair;"></canvas>
@@ -50,9 +55,10 @@ Instructions on use can be found in the README repository.
   <script src="./js/calibration.js"></script>
   <script src="./js/precision_calculation.js"></script>
   <script src="./js/precision_store_points.js"></script>
+  
 
-
-  <!-- <nav class="navbar navbar-light bg-light" id="webgazerNavbar" style="width:5rem;">
+<!-- 
+  <nav class="navbar navbar-light bg-light" id="webgazerNavbar" style="width:5rem;">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -99,7 +105,7 @@ Instructions on use can be found in the README repository.
     <div class="modal-dialog">
 
       <!-- Modal content -->
-      <div class="modal-content">
+      <div class="modal-content" >
         <div class="modal-footer">
           <button id="closeBtn" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
           <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="Restart()">Calibrate</button>
@@ -109,6 +115,8 @@ Instructions on use can be found in the README repository.
     </div>
   </div>
 
+
+  
 
   <script>  
     document.getElementById('backImage').addEventListener('change', readURL, true);
