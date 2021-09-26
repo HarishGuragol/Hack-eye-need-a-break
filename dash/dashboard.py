@@ -13,6 +13,10 @@ import plotly.graph_objects as go
 import pandas as pd
 import numpy as np
 
+import plotly.io as pio
+
+pio.templates.default = "seaborn"
+
 from db.utils.calc_scores import get_dash_data, get_sensitivity_value
 THRESH=0.1
 
@@ -34,7 +38,7 @@ while True:
     print("Await a data...")
     time.sleep(5)
 
-t = list(map(lambda x: (x-min_t)/60, t))
+t = list(map(lambda x: (x-min_t)/1000, t))
 # t = np.arange(0,100) # replace with times from db
 # y = np.random.rand(100) # replace with scores from db
 
@@ -48,14 +52,18 @@ below_percent = 100 - above_percent
 
 #fig = px.bar(df, x="Fruit", y="Amount", color="City", barmode="group")
 fig = px.line(df, x='t', y='y', labels={
-                     "t": "time [ms]",
-                     "y": "Attention score",
-                 })
+                     "t": "time [s]",
+                     "y": "Distraction score",
+                 },)
 
 fig2 = make_subplots(rows=1, cols=2, specs=[[{"type": "xy"}, {"type": "domain"}]])
 
 fig2.add_trace(go.Histogram(x=df["y"]), row=1, col=1)
-fig2.add_trace(go.Pie(values=[above_percent, below_percent]), row=1, col=2)
+fig2.add_trace(go.Pie(values=[above_percent, below_percent], labels=['distracted', 'attentive'], scalegroup='one'), row=1, col=2)
+
+fig2.update_xaxes(title_text="score", row=1, col=1)
+fig2.update_yaxes(title_text="frequency", row=1, col=1)
+
 
 app.layout = html.Div(children=[
     html.H1(children='Dashboard'),
@@ -70,7 +78,6 @@ app.layout = html.Div(children=[
     ),
 
     html.Div(children='''
-        Summary of attention scores from eye-tracking data.
     '''),
 
     dcc.Graph(
@@ -86,12 +93,12 @@ app.layout = html.Div(children=[
 
 @app.callback(Output('example-graph', 'figure'), [Input('interval-component', 'interval')])
 def update_example_graph(a):
+    sensitivity = get_sensitivity_value(user_id)
     y, t = get_dash_data(user_id)
     print(t)
     min_t = min(t)
-    t = list(map(lambda x: (x - min_t) / 60, t))
+    t = list(map(lambda x: (x - min_t) / 1000, t))
 
-    df = pd.DataFrame({'t': t, 'y': y})
     df = pd.DataFrame({'t': t, 'y': y})
     fig = px.line(df, x='t', y='y', labels={
         "t": "time [ms]",
