@@ -1,6 +1,11 @@
 # HackZurich 2021
 
 ## Team - Eye-Need-a-Break
+The web app uses eye tracking to assess your level of distraction and shows the scores on a dashboard.
+
+The eye gaze coordinates are extracted from the video data using the webgazer.js API. Only these coordinates are sent to the backend, protecting the user's privacy. On the Flask backend, the coordinates are stored in an SQLAlchemy database. A distraction score is calculated based on the standard deviation of these coordinates, relative to a random distribution over the whole screen. The time series and statistics of the score are shown on a dashboard powered by Plotly Dash.
+
+### Project Link : https://devpost.com/software/eye-need-a-break
 
 
 ## To run the WebGazer-
