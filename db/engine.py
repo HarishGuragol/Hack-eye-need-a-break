@@ -6,10 +6,12 @@ from sqlalchemy import create_engine
 from db.config import Config
 
 
-uri = "sqlite:///{current_path}\\db.sqlite"
+uri = "sqlite:///{current_path}/db.sqlite"
 uri = uri.format(**{
     "current_path": os.path.dirname(os.path.realpath(__file__)),
 })
+
+print("uri: ", uri)
 
 engine = create_engine(uri)
 while True:

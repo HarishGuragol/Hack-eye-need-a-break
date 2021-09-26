@@ -1,45 +1,27 @@
 version: "2"
 
 services:
-  database:
-    container_name: database
-    image: postgres
-    restart: always
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
-    ports:
-      - "${POSTGRES_PORT}:5432"
-
-  database_migration:
-    build:
-      dockerfile: ./db/Dockerfile
-      context: ./
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_PORT: 5432
-      DB_SERVICE_NAME: ${DB_SERVICE_NAME}
-    links:
-      - database:database
-    depends_on:
-      - database
-
   backend:
     build:
       dockerfile: ./backend/Dockerfile
       context: ./
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_PORT: 5432
-      DB_SERVICE_NAME: ${DB_SERVICE_NAME}
-    links:
-      - database:database
+    volumes:
+      -  ./db:/project/db
     ports:
       - 5000:80
-    depends_on:
-      - database
+
+  score_calculation:
+    build:
+      dockerfile: ./db/Dockerfile
+      context: ./
+    volumes:
+      - ./db:/project/db
+
+  dash:
+    build:
+      dockerfile: ./dash/Dockerfile
+      context: ./
+    volumes:
+      - ./db:/project/db
+    ports:
+      - 8050:80

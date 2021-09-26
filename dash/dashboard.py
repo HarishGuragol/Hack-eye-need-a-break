@@ -1,7 +1,10 @@
 # Run this app with `python app.py` and
 # visit http://127.0.0.1:8050/ in your web browser.
+import os
+import time
 
 import dash
+from dash.dependencies import Output,Input
 import dash_core_components as dcc
 import dash_html_components as html
 import plotly.express as px
@@ -11,7 +14,7 @@ import pandas as pd
 import numpy as np
 
 from db.utils.calc_scores import get_dash_data, get_sensitivity_value
-THRESH=0.8
+THRESH=0.1
 
 app = dash.Dash(__name__)
 
@@ -19,10 +22,18 @@ app = dash.Dash(__name__)
 # see https://plotly.com/python/px-arguments/ for more options
 
 user_id = 1
-sensitivity = get_sensitivity_value(user_id)
-y, t = get_dash_data(user_id)
-print(t)
-min_t = min(t)
+while True:
+    try:
+        sensitivity = get_sensitivity_value(user_id)
+        y, t = get_dash_data(user_id)
+        print(t)
+        min_t = min(t)
+        break
+    except:
+        pass
+    print("Await a data...")
+    time.sleep(5)
+
 t = list(map(lambda x: (x-min_t)/60, t))
 # t = np.arange(0,100) # replace with times from db
 # y = np.random.rand(100) # replace with scores from db
@@ -39,7 +50,7 @@ below_percent = 100 - above_percent
 fig = px.line(df, x='t', y='y', labels={
                      "t": "time [ms]",
                      "y": "Attention score",
-                 },)
+                 })
 
 fig2 = make_subplots(rows=1, cols=2, specs=[[{"type": "xy"}, {"type": "domain"}]])
 
@@ -55,7 +66,7 @@ app.layout = html.Div(children=[
 
     dcc.Graph(
         id='example-graph',
-        figure=fig
+        animate=True
     ),
 
     html.Div(children='''
@@ -65,9 +76,33 @@ app.layout = html.Div(children=[
     dcc.Graph(
         id='example-graph2',
         figure=fig2
-    )
+    ),
 
+    dcc.Interval(
+            id='interval-component',
+            interval=1*1000
+        )
 ])
 
+@app.callback(Output('example-graph', 'figure'), [Input('interval-component', 'interval')])
+def update_example_graph(a):
+    y, t = get_dash_data(user_id)
+    print(t)
+    min_t = min(t)
+    t = list(map(lambda x: (x - min_t) / 60, t))
+
+    df = pd.DataFrame({'t': t, 'y': y})
+    df = pd.DataFrame({'t': t, 'y': y})
+    fig = px.line(df, x='t', y='y', labels={
+        "t": "time [ms]",
+        "y": "Attention score",
+    })
+    return fig
+
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    if os.environ.get('PROD', False):
+        print("Production dashboard is running!")
+        app.run_server("0.0.0.0", 80, debug=True)
+    else:
+        print("Dev dashboard is running!")
+        app.run_server(debug=True)

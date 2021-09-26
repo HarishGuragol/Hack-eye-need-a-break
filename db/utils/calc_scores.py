@@ -5,8 +5,11 @@ from backend.utils.utils import create_score, get_sensitivity_by_user_id
 from db.models import EyeData, Score, User
 from distraction_classification.score import score_variance
 
-range_time = 60 * 5
-check_everytime_step = 60
+# range_time = 60 * 5
+# check_everytime_step = 60
+
+range_time = 60
+check_everytime_step = 10
 
 
 def calc_score_for_one_time(user_id, timestamp):
@@ -37,7 +40,7 @@ def calc_score_for_one_time(user_id, timestamp):
             return
 
         eye_data_arr = np.array(list([
-            [eye_item[2], eye_item[3], int(eye_item[4])]
+            [eye_item[2], eye_item[3], eye_item[4]]
             for eye_item in eye_data
         ]))
         try:
@@ -97,4 +100,9 @@ def get_sensitivity_value(user_id):
 
 
 if __name__ == '__main__':
-    calc_score_for_all_users()
+    while True:
+        try:
+            calc_score_for_all_users()
+        except:
+            pass
+        time.sleep(10)
