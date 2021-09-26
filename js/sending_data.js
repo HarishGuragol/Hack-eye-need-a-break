@@ -1,7 +1,7 @@
 let eyeData = []
 
 function sendDataToBackend() {
-  fetch('http://localhost:5000/send_eye_data', {
+  fetch('/send_eye_data', {
     method: 'POST',
     credentials: 'include',
     headers: {
@@ -24,7 +24,7 @@ function sendData(x, y, timestamp) {
 }
 
 function sendSensitivity(value) {
-  fetch('http://localhost:5000/send_sensitivity', {
+  fetch('/send_sensitivity', {
     method: 'POST',
     credentials: 'include',
     headers: {
