@@ -17,3 +17,28 @@ Steps to use-
 ```
 
 **http://localhost:5000/apidocs/** - **api description**
+
+
+## Deploy
+
+```bash
+> apt install git -y
+> git clone https://github.com/HarishGuragol/eye-need-a-break.git
+> cd eye-need-a-break
+> apt install docker-compose -y
+> docker-compose up
+```
+
+#### Useful commands
+```bash
+> docker rm -vf $(docker ps -a -q) // Delete all docker containers
+> docker rmi -f $(docker images -a -q) // Delete all docker images
+```
+It may be useful before new deploy (delete old data)
+
+#### Generate keys
+```bash
+openssl genrsa 2048 > host.key
+chmod 400 host.key
+openssl req -new -x509 -nodes -sha256 -days 365 -key host.key -out host.cert
+```

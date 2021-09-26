@@ -10,10 +10,11 @@ def run_server():
     # add_test_data()
     if os.environ.get('PROD', False):
         print("Production server is running!")
-        app.run(host="0.0.0.0", port=80)
+        context = ('./backend/keys/host.cert', './backend/keys/host.key')
+        app.run(host="0.0.0.0", port=80, ssl_context=context)
     else:
         print("Dev server is running!")
-        app.run(port=5000)
+        app.run(port=5000, debug=True)
 
 
 if __name__ == '__main__':
