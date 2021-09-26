@@ -40,11 +40,12 @@ def calc_score_for_one_time(user_id, timestamp):
             return
 
         eye_data_arr = np.array(list([
-            [eye_item[2], eye_item[3], eye_item[4]]
+            [eye_item[2], eye_item[3], 100*eye_item[4]]
             for eye_item in eye_data
         ]))
         try:
             score = score_variance(eye_data_arr, 1920, 1080)
+            print("Add new score!")
         except:
             pass
 
@@ -105,4 +106,5 @@ if __name__ == '__main__':
             calc_score_for_all_users()
         except:
             pass
+        print("Await new a loop...")
         time.sleep(10)

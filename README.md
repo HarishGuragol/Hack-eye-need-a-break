@@ -22,6 +22,7 @@ Steps to use-
 ## Deploy
 
 ```bash
+> sudo ufw allow 8050
 > apt install git -y
 > git clone https://github.com/HarishGuragol/eye-need-a-break.git
 > cd eye-need-a-break
