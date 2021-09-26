@@ -7,7 +7,7 @@ from db.migration import make_migration
 
 
 def run_server():
-    add_test_data()
+    # add_test_data()
     if os.environ.get('PROD', False):
         print("Production server is running!")
         context = ('./backend/keys/host.cert', './backend/keys/host.key')
