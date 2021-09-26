@@ -1,4 +1,7 @@
-# eye-need-a-break
+# HackZurich 2021
+
+## Team - Eye-Need-a-Break
+
 
 ## To run the WebGazer-
 ```
