@@ -101,8 +101,8 @@ def update_example_graph(a):
 
     df = pd.DataFrame({'t': t, 'y': y})
     fig = px.line(df, x='t', y='y', labels={
-        "t": "time [ms]",
-        "y": "Attention score",
+        "t": "time [s]",
+        "y": "Distraction score",
     })
     return fig
 
